@@ -2,14 +2,17 @@ import { getDocs, collection } from "firebase/firestore"
 import { useEffect, useState } from "react";
 import { auth } from "../config/firebase"
 import { useAuthState } from "react-firebase-hooks/auth"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Post from "../components/Post";
-import { db } from "../config/firebase"
+import { db } from "../config/firebase";
+import { message } from "antd";
+
 export default function Home() {
 
     const [user] = useAuthState(auth);
     const postsRef = collection(db, "posts");
     const [postList, setPostList] = useState([]);
+    const navigate = useNavigate();
 
     const getPosts = async () => {
         const data = await getDocs(postsRef);
@@ -24,6 +27,13 @@ export default function Home() {
         getPosts();
     },[])
 
+    useEffect(()=>{
+        if(!user){
+            navigate('/login');
+            message.info("Please login to access the Homepage");
+        }
+    },[])
+    
     return (
         <div>
             <h3>Latest posts</h3>

@@ -8,7 +8,6 @@ import { UploadOutlined } from '@ant-design/icons';
 import { useState } from "react";
 
 
-
 export default function Profile() {
 
     const [profileImg, setProfileImg] = useState(null);

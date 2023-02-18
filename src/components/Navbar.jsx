@@ -2,6 +2,7 @@ import { Link } from "react-router-dom"
 import { auth } from "../config/firebase"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { signOut } from "firebase/auth";
+import { useEffect } from "react";
 import { async } from "@firebase/util";
 import userAvatar from "../assets/user.png"
 import { useNavigate } from "react-router-dom";
@@ -14,12 +15,18 @@ export default function Navbar() {
         await signOut(auth)
         navigate('/login');
     };
+
+    useEffect(()=>{
+        if(user){
+            navigate('/')
+        }
+    },[])
     
     return (
         <div className="nav">
             
-            <Link to="/" className="nav-home-link"> Home </Link>
-                      
+            {user && <Link to="/" className="nav-home-link"> Home </Link>}
+            
             { user && <div className="user-info">
                 <Link to="/post" className="nav-link">Create post</Link> 
 

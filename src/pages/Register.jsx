@@ -13,13 +13,14 @@ export default function Register() {
     const [registerName, setRegisterName] = useState("");
     const [registerEmail, setRegisterEmail] = useState("");
     const [registerPassword, setRegisterPassword] = useState("");
+    const navigate = useNavigate();
 
     const register = async () => {
         try {
             const user = await createUserWithEmailAndPassword(auth, registerEmail, registerPassword);
             message.success("sign up successful");
             addName();
-            navigate('/');
+            navigate("/");
         } catch (error) {
             message.error(error.message);
         }
@@ -35,7 +36,7 @@ export default function Register() {
         
         
     }
-    const navigate = useNavigate();
+    
     const signInWithGoogle = async() => {
         try{
             await signInWithPopup(auth, provider);
